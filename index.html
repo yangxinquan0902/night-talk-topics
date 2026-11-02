@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#120718" />
+<title>情侣夜聊必备话题</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { color-scheme: dark; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    background:
+      radial-gradient(720px 420px at 15% -6%, rgba(255, 64, 129, 0.16), rgba(255,64,129,0) 60%),
+      radial-gradient(680px 480px at 88% 4%, rgba(124, 92, 255, 0.16), rgba(124,92,255,0) 62%),
+      linear-gradient(168deg, #120718 0%, #1c0f26 46%, #0e0a1c 100%);
+    font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #f4ecf8;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* ===== 标题 ===== */
+  .header {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 2px 12px;
+    width: 100%;
+    max-width: 460px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+  .heart {
+    width: 34px; height: 34px;
+    display: -webkit-flex; display: flex;
+    -webkit-align-items: center; align-items: center;
+    -webkit-justify-content: center; justify-content: center;
+    font-size: 19px;
+    border-radius: 12px;
+    background: -webkit-linear-gradient(135deg, #ff3d77, #b44bff);
+    background: linear-gradient(135deg, #ff3d77, #b44bff);
+    box-shadow: 0 4px 16px rgba(255, 61, 119, 0.45);
+    -webkit-animation: beat 1s ease-in-out infinite;
+    animation: beat 1s ease-in-out infinite;
+  }
+  @-webkit-keyframes beat {
+    0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+    12% { -webkit-transform: scale(1.16); transform: scale(1.16); }
+    24% { -webkit-transform: scale(1); transform: scale(1); }
+    36% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+    50% { -webkit-transform: scale(1); transform: scale(1); }
+  }
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    12% { transform: scale(1.16); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+  }
+  .header .t {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+  .header .sub { margin-left: auto; font-size: 11px; color: rgba(244, 236, 248, 0.45); letter-spacing: 1px; }
+
+  /* ===== 分类 Tab ===== */
+  .tabs {
+    width: 100%;
+    max-width: 460px;
+    display: -webkit-flex;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px 12px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    padding: 9px 16px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: rgba(255, 255, 255, 0.05);
+    color: #cfc2dd;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+  }
+  .tab:active { -webkit-transform: scale(0.94); transform: scale(0.94); }
+  .tab.on {
+    color: #fff;
+    border-color: transparent;
+    background: var(--skin-btn, -webkit-linear-gradient(135deg, #ff3d77, #b44bff));
+    background-image: var(--skin-btn, linear-gradient(135deg, #ff3d77, #b44bff));
+    box-shadow: 0 6px 18px var(--skin-shadow, rgba(255, 61, 119, 0.4));
+  }
+
+  /* ===== 主区域 ===== */
+  .stage {
+    width: 100%;
+    max-width: 460px;
+    -webkit-flex: 1;
+    flex: 1;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card {
+    position: relative;
+    -webkit-flex: 1;
+    flex: 1;
+    min-height: 300px;
+    border-radius: 30px;
+    overflow: hidden;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 66px 26px 86px;
+    text-align: center;
+    cursor: pointer;
+    background-image: var(--skin-bg, linear-gradient(150deg, #ff2e63 0%, #b44bff 100%));
+    background-color: #ff2e63;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    transition: background 0.45s ease;
+  }
+  .card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(320px 260px at 18% 4%, rgba(255, 255, 255, 0.2), rgba(255,255,255,0) 62%),
+      radial-gradient(360px 300px at 86% 100%, rgba(255, 255, 255, 0.13), rgba(255,255,255,0) 68%);
+    pointer-events: none;
+  }
+  .card-top {
+    position: absolute;
+    top: 20px; left: 24px;
+    display: -webkit-flex; display: flex;
+    -webkit-align-items: center; align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.92);
+    z-index: 3;
+  }
+  .card-top .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  }
+  .paused-badge {
+    position: absolute;
+    top: 18px; right: 22px;
+    padding: 4px 12px;
+    font-size: 11.5px;
+    letter-spacing: 2px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.32);
+    color: rgba(255, 255, 255, 0.95);
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .paused-badge.show { opacity: 1; }
+
+  .q-wrap {
+    position: relative;
+    z-index: 3;
+    -webkit-flex: 1;
+    flex: 1;
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+  .q-text {
+    width: 100%;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 1.5px;
+    word-break: break-all;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+  }
+  .card-foot {
+    position: absolute;
+    bottom: 22px; left: 26px; right: 26px;
+    display: -webkit-flex; display: flex;
+    -webkit-align-items: center; align-items: center;
+    -webkit-justify-content: space-between; justify-content: space-between;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.82);
+    z-index: 3;
+  }
+  .card-word {
+    position: absolute;
+    bottom: -14px; right: -8px;
+    font-size: 84px;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ===== 控制条 ===== */
+  .ctrl {
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    gap: 10px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+  .cbtn {
+    -webkit-flex: 1;
+    flex: 1;
+    height: 50px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8ddf2;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 1px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.18s ease;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center; align-items: center;
+    -webkit-justify-content: center; justify-content: center;
+    gap: 5px;
+  }
+  .cbtn:active { -webkit-transform: scale(0.95); transform: scale(0.95); }
+  .cbtn.play {
+    -webkit-flex: 1.6;
+    flex: 1.6;
+    border: none;
+    color: #fff;
+    background-image: var(--skin-btn, linear-gradient(135deg, #ff3d77, #b44bff));
+    background-color: #ff3d77;
+    box-shadow: 0 8px 22px var(--skin-shadow, rgba(255, 61, 119, 0.4));
+  }
+
+  /* ===== 速度调节 ===== */
+  .speed-row {
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center; align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+  .speed-row .lab { font-size: 12.5px; color: #cfc2dd; letter-spacing: 1px; -webkit-flex-shrink: 0; flex-shrink: 0; }
+  .speed-row input[type="range"] {
+    -webkit-flex: 1;
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 4px;
+    background: -webkit-linear-gradient(90deg, #ff3d77, #b44bff);
+    background: linear-gradient(90deg, #ff3d77, #b44bff);
+    outline: none;
+  }
+  .speed-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+  }
+  .speed-row .val {
+    -webkit-flex-shrink: 0; flex-shrink: 0;
+    min-width: 52px;
+    text-align: right;
+    font-size: 12.5px;
+    color: #fff;
+    opacity: 0.85;
+  }
+  .hint { font-size: 11px; color: rgba(244, 236, 248, 0.4); letter-spacing: 1.5px; text-align: center; padding-bottom: 4px; -webkit-flex-shrink: 0; flex-shrink: 0; }
+
+  /* ===== 调试错误提示（正常情况不显示） ===== */
+  .err-box {
+    display: none;
+    width: 100%;
+    max-width: 460px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 60, 60, 0.18);
+    border: 1px solid rgba(255, 100, 100, 0.5);
+    color: #ffc9c9;
+    font-size: 12px;
+    word-break: break-all;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="heart">💗</div>
+    <div class="t">情侣夜聊必备话题</div>
+    <div class="sub">NIGHT TALK</div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="stage">
+    <div class="card" id="card">
+      <div class="card-top"><span class="dot"></span><span id="catName">夜聊甜话</span></div>
+      <div class="paused-badge" id="pausedBadge">已暂停 · 点击继续</div>
+      <div class="q-wrap"><div class="q-text" id="qText">加载中...</div></div>
+      <div class="card-foot"><span class="idx" id="idxText">01 / 60</span><span id="catEn">SWEET</span></div>
+      <div class="card-word" id="catWord">LOVE</div>
+    </div>
+
+    <div class="ctrl">
+      <button class="cbtn" id="prevBtn" type="button">上一题</button>
+      <button class="cbtn play" id="playBtn" type="button">▶ 播放</button>
+      <button class="cbtn" id="nextBtn" type="button">下一题</button>
+      <button class="cbtn" id="shuffleBtn" type="button">🔀</button>
+    </div>
+
+    <div class="speed-row">
+      <span class="lab">速度</span>
+      <input type="range" id="speedRange" min="100" max="1200" step="20" value="200" />
+      <span class="val" id="speedVal">200ms</span>
+    </div>
+    <div class="hint">点卡片暂停 / 继续 · 切分类自动播放</div>
+    <div class="err-box" id="errBox"></div>
+  </div>
+
+<script>
+// ==================== 兼容性兜底：任何脚本报错都显示在页面上 ====================
+window.onerror = function (msg, src, line) {
+  var el = document.getElementById("errBox");
+  if (el) {
+    el.style.display = "block";
+    el.innerHTML = "脚本错误: " + msg + " (第 " + line + " 行)";
+  }
+};
+
+// ==================== 分类数据 ====================
+var CATS = [
+  {
+    name: "夜聊甜话", en: "SWEET", word: "LOVE",
+    bg: "linear-gradient(150deg, #ff2e63 0%, #b44bff 100%)",
+    btn: "linear-gradient(135deg, #ff3d77, #b44bff)",
+    shadow: "rgba(255, 61, 119, 0.4)",
+    items: [
+      "你最喜欢我吻你哪个部位？","第一次见我时，你心里偷偷想了什么？","我哪个小动作会让你瞬间心动？",
+      "你最想和我一起做的日常小事是什么？","我穿什么风格的衣服你最挪不开眼？","你手机里最舍不得删的我的照片是哪张？",
+      "我做过最让你意外的一件事是什么？","你理想中的约会场景是怎样的？","我身上什么味道让你觉得很安心？",
+      "你悄悄为我准备过什么惊喜吗？","我什么时候看起来特别可爱？","如果每天只能对我说一句话，你会说什么？",
+      "你最喜欢我称呼你什么？","我哪次撒娇让你完全没办法拒绝？","你幻想过我们的未来家里是什么样吗？",
+      "我生气的时候，你其实在想什么？","你最喜欢我主动为你做什么？","我们之间最像偶像剧的瞬间是什么？",
+      "你偷偷模仿过我的习惯吗？","我什么时候让你觉得「就是这个人了」？","你手机里给我的备注是什么？",
+      "我睡着的时候，你偷偷看过我吗？","你最想和我一起去哪里旅行？","我什么时候显得特别需要你？",
+      "我哪句话能立刻让你开心起来？","你想象过我们结婚那天的细节吗？","我什么时候让你觉得特别骄傲？",
+      "你心里给我打多少分？","我做的哪道菜你其实不爱吃但没说？","你最喜欢我头发什么样子？",
+      "如果我们养宠物，你想养什么？","我穿哪件衣服你印象最深？","你听过最甜的情话想对我说吗？",
+      "我什么时候最让你心疼？","你希望我每天怎么叫你起床？","我们拥抱时，你通常在感受什么？",
+      "你偷偷记下过我的喜好吗？","我哪次眼神让你心跳漏了一拍？","你设想过我们的孩子长什么样吗？",
+      "我什么样子你觉得最性感？","你梦到过我吗？是什么梦？","我哪次为你哭让你最难受？",
+      "你理想中我们的一天怎么度过？","我做什么事会让你觉得特别被爱？","你手机相册里我们的最新合照是哪张？",
+      "我哪次主动让你特别开心？","你希望我多依赖你一点吗？","我们之间最甜的默契是什么？",
+      "你收藏过我们的聊天记录吗？","我哪个优点是你朋友不知道的？","你想象过我们老了的样子吗？",
+      "你最想和我一起培养什么爱好？","我哪次吃醋让你觉得很有趣？","你希望我怎样表达对你的想念？",
+      "我们之间有什么只有彼此懂的暗号？","我什么时刻让你觉得特别温柔？","我哪个缺点在你眼里反而可爱？",
+      "此时此刻，你最想对我做什么？","第一次见到我，你对我是什么印象","跟我在一起后，你的内心是真的快乐吗",
+      "喜欢粘一点的，还是理智一点的","你和你的朋友们提过我吗","有没有那么一瞬间很心疼我",
+      "我什么地方最吸引你","说说你对冷战的看法","我在你心里是什么样的",
+      "可以为了我拒绝所有暧昧吗","答应我的事情能做到吗","从什么时候开始真正喜欢上我的？",
+      "如果用一个词来形容我，你会用什么？","有没有哪个瞬间让你突然想娶/想嫁给我？","和我在一起后，你比以前更开心吗？"
+    ]
+  },
+  {
+    name: "Deep Talk", en: "DEEP", word: "SOUL",
+    bg: "linear-gradient(150deg, #1e3a8a 0%, #7c3aed 100%)",
+    btn: "linear-gradient(135deg, #3b82f6, #7c3aed)",
+    shadow: "rgba(99, 102, 241, 0.42)",
+    items: [
+      "你是在哪个具体瞬间发现自己爱上我的？","我哪种表达爱的方式，最让你接收不到信号？",
+      "你觉得「不爱了」和「暂时不想爱了」区别在哪？","长期关系中，什么东西被爱情消耗得最快？",
+      "你爱我身上哪个缺点，是你从不敢当面说的？","我们之间有没有一个你假装原谅了，其实还没过去的事？",
+      "你曾因为怕失去我，而故意降低过自己的底线吗？","如果我突然变得比你成功很多，你会真心高兴还是暗暗焦虑？",
+      "你在过去的感情里，有欠谁一句「对不起」吗？","过去的感情让你对哪类行为特别敏感？",
+      "精神出轨和肉体出轨，哪个更难原谅？","你相信「唯一灵魂伴侣」吗？如果相信，你觉得就是我吗？",
+      "你还保留着旧情人送的物品吗？为什么？","你最近一次感到脆弱或想哭是什么时候？需要我做什么吗？",
+      "如果爱情和你的个人理想必须二选一，你选什么？","如果能改变我一个性格特点，你会改什么？",
+      "你经历过被爱的最佳时刻是哪一次？","「爱一个人就该无条件信任」这句话你认同吗？",
+      "我们之间有过差一句话就崩掉的时刻吗？","有什么事你一直在迁就我，但没说出来过？",
+      "你在哪件事上对我撒过「快乐」的谎？","你希望我在哪件事上对你说「不」？",
+      "你看到别的情侣的什么互动，会希望我们也有？","我们在一起之后，你觉得自己在哪方面变幼稚了？",
+      "你心中一段健康的关系必须有的三个要素是什么？","你有没有哪件事，是因为和我在一起之后才敢去做的？",
+      "你觉得我们之间最需要改进的沟通方式是什么？","在一段感情里，你觉得安全感主要来自哪里？",
+      "你觉得爱情里仪式感重要吗？你最喜欢哪种仪式感？","如果用一个动词来形容我们的爱情，你会用什么？",
+      "你觉得被理解和被宠爱，哪个对你更重要？","你觉得我身上最反差萌的地方是什么？",
+      "你心里有没有一个一直想感谢但没机会说的人？","我们之间有没有一个只有你我知道的暗号或梗？",
+      "我做过最让你哭笑不得的一件事是什么？","你觉得我们两个人谁更离不开谁？为什么？",
+      "你什么时候会觉得有我在真好？","如果能回到过去改变一件事，你会改变什么？",
+      "你觉得我最像哪种小动物？","你觉得哪种「味道」最能代表你的童年？",
+      "和我在一起后，你最大的变化是什么？","你现在最焦虑的一件事，是什么？",
+      "你觉得我身上，最吸引你的一点是什么？","哪一个瞬间，你会觉得「有我在，真好」？",
+      "你最想从我这里，得到什么样的情绪价值？","你会在我面前，刻意伪装自己吗？",
+      "你现在最想原谅的人，是谁？","你有没有过深夜痛哭，却不想让我知道的时刻？",
+      "你最害怕我用什么词，来评价你？","哪件小事，会让你瞬间觉得「生活好温暖」？",
+      "你觉得「安全感」，对我们来说意味着什么？","你现在最想做，却一直没敢做的事是什么？",
+      "你觉得我最不懂你的地方，是什么？","你对「永远」这两个字，还相信吗？",
+      "你最想从我这里，听到一句什么样的肯定？","你对我们未来的孩子，有什么样的期待？",
+      "你会为了我们的未来，放弃自己的某些梦想吗？","你觉得我们之间，最大的挑战会是什么？",
+      "如果我们只能活最后一天，你最想和我一起做什么？","你觉得我们的爱情，会随着时间变成亲情吗？",
+      "你最想对我说，却一直没说出口的话是什么？","你觉得「合适」和「喜欢」，哪个更重要？",
+      "你会为了我，和全世界对抗吗？","如果让你重新选一次，你还会选择和我在一起吗？",
+      "你第一次对我心动，是在什么时候？","你会在我面前，暴露自己最脆弱的一面吗？",
+      "你有没有过「想放弃这段感情」的瞬间？","你最想我为你，做的一件浪漫的事是什么？"
+    ]
+  },
+  {
+    name: "吃醋100问", en: "JEALOUS", word: "MINE",
+    bg: "linear-gradient(150deg, #f59e0b 0%, #ef4444 100%)",
+    btn: "linear-gradient(135deg, #f97316, #ef4444)",
+    shadow: "rgba(239, 68, 68, 0.42)",
+    items: [
+      "吃醋会故意和别人暧昧让我吃醋吗？","我和异性有专属玩笑/昵称，你介意吗？","你吃醋时最明显的表情是什么？",
+      "我和异性深夜聊天记录，你介意吗？","有人对我示好，希望我咋回应？","吃醋会变得特别黏人吗？",
+      "我和异性同事单独出差，你介意吗？","你有没有假装不吃醋，其实心里很在意？","吃醋会偷偷比较自己和对方吗？",
+      "我穿得比较好看出门，你会有点担心吗？","吃醋会冷落我，还是直接发脾气？","我和别人共喝一杯，你啥反应？",
+      "你吃醋时会口是心非吗？","我和异性聊很久，你会默默不开心吗？","吃醋会故意不理我吗？",
+      "我和异性打游戏，你会介意吗？","前任哪件事让你最吃醋？","我和异性互相帮忙，你会吃醋吗？",
+      "吃醋会变得特别敏感吗？","我和异性合影，你会介意吗？","有人夸我好看，你心里真实想法是什么？",
+      "吃醋会直接问我，还是瞎猜？","我和异性讨论感情问题，你会介意吗？","你吃醋时会想抱抱我吗？",
+      "我哪个朋友让你最有危机感？","吃醋哭过吗？因为啥？","我和异性一起上下班/学，你会介意吗？",
+      "介意我社媒和异性互动吗？","我和别人笑很开心，你会不爽？","吃醋最厉害的一次，是因为什么？",
+      "我和异性单独走路，你会介意吗？","介意我和前任联系吗？啥程度？","吃醋会变得占有欲强吗？",
+      "我和异性有说有笑，你会立刻不开心吗？","偷翻过我手机吗？看到啥会最气？","我和异性分享日常小事，你会不舒服吗？",
+      "你吃醋时会想让我哄你吗？","我和异性一起吃饭拍照，你会不舒服吗？","谁最容易让我吃醋？",
+      "我和异性聊到很晚，你会生气吗？","吃醋失眠过吗？因为啥？","我哪个习惯让人误会会让你吃醋？",
+      "介意我和异性单独吃饭吗？","吃醋会故意让我也吃醋吗？","我和别人有肢体接触，你的底线？",
+      "你希望我主动告诉你异性相关的事吗？","吃醋时最想听我说什么？","我和他人走近，你会怎么想？",
+      "我和异性开玩笑，你能接受的尺度在哪？","有人撩我，你会立刻吃醋吗？","吃醋会默默记住，下次提吗？",
+      "我哪个行为最易让你误会？","你觉得我太受欢迎，是好事还是坏事？","我和别人有共同爱好你没有，会吃醋？",
+      "我常点赞别人动态，你介意吗？","我和异性互道晚安，你介意吗？","你吃醋时会不想说话吗？",
+      "吃醋做过最冲动的事是啥？","我和异性单独看电影/听歌，你介意吗？","你有没有因为吃醋而偷偷难过？",
+      "我哪条社交动态最易让你吃醋？","你希望我在异性面前多照顾你感受吗？","别人比你更懂我的事，你会不爽？",
+      "我和异性有共同话题，你会有点失落吗？","你会因为我对别人太好而吃醋吗？","我哪张朋友圈照片最易让你吃醋？",
+      "有人对我特别关心，你会吃醋吗？","你吃醋时最想我做什么？","我夸别人好看，你会不开心？",
+      "你觉得我安全感给够了吗？","吃醋取消过我们的约会吗？","你会因为我回消息慢而胡思乱想吗？",
+      "我和别人一起参加活动，你会担心吗？","最受不了我和异性哪种互动？","吃醋查过我的行踪吗？",
+      "你吃醋时会表现得很明显吗？","我没回消息却和别人聊，你咋想？","你希望我主动避开让你吃醋的事吗？",
+      "我和异性开玩笑说暧昧话，你能忍吗？","别人送我礼物，你怎么想？","你会因为我和异性走得近而没安全感吗？",
+      "有人说我和别人很配，你会难受吗？","你觉得我懂你吃醋的点吗？","吃醋想过分手吗？为什么？",
+      "你吃醋时会想让我离别人远一点吗？","有人喜欢我，你希望我咋处理？","我哪位异性朋友让你最有危机感？",
+      "往后余生，最想每天和我重复做什么事？"
+    ]
+  },
+  {
+    name: "是或者不是", en: "YES / NO", word: "TRUE",
+    bg: "linear-gradient(150deg, #059669 0%, #0ea5e9 100%)",
+    btn: "linear-gradient(135deg, #10b981, #0ea5e9)",
+    shadow: "rgba(16, 185, 129, 0.42)",
+    items: [
+      "是否期待每天醒来收到我的消息？","你会注意我每天的穿着变化吗？","是否想象过我们同居的生活场景？",
+      "你会因为我的消息提示音而心跳加快吗？","牵手时会假装自然其实很紧张？","是否好奇过我的唇膏味道？",
+      "对视超过3秒会想移开视线？","是否偷偷练习过拥抱的姿势？","我的香水/须后水味道会让你分心？",
+      "是否搜索过我的星座配对指数？","你梦到过我超过3次吗？","会反复看我们的聊天记录吗？",
+      "是否故意延长和我相处的时间？","我的声音能让你感到安心？","想象过我们老年的样子吗？",
+      "是否考虑过我们的孩子长相？","愿意和我尝试双人极限运动？","能接受我比你早起做早餐？",
+      "相信我们会培养出专属默契？","敢吃我咬过的食物吗？","愿意穿我选的情侣装出门？",
+      "能闭眼让我画眉/刮胡子？","接受我突袭检查手机相册？","敢在人群里大声说想我？",
+      "保存过我的社交动态截图？","会模仿我的口头禅？","偷偷记下我的饮食偏好？",
+      "研究过我的歌单收藏？","背得出我的手机尾号？","好奇过我睡衣的款式？",
+      "注意过我说话时的嘴唇？","会留意我常用的口红色号？","记得我喝咖啡的甜度？",
+      "相信我们能读懂彼此眼神？","我的触碰会让你体温上升？","能接受共用一根吸管？",
+      "我的发香会让你走神？","我的笑容比阳光更治愈？","我的侧脸比正脸更好看？",
+      "我的衣品符合你的审美？","我的声音适合哄睡故事？","喜欢被温柔抚摸头发？",
+      "享受背后拥抱的温度？","期待惊喜的额头亲吻？","会因我吃醋而窃喜？",
+      "我的撒娇对你有效？","想象过帮我吹头发的场景？","想过和我养同品种宠物？",
+      "愿意陪我凌晨看日出？","能接受我的奇怪睡眠习惯？","想建立专属的暗号系统？",
+      "敢闭眼让我喂食物？","敢在公开场合十指相扣？","记得我常用的表情包？",
+      "发现我紧张时摸耳朵？","记得我喝醉时的模样？","我的出现影响过你的心跳？",
+      "我的照片出现在你相册精选？","我的消息会打断你的工作？","我的生日是你重要密码？",
+      "敢让我保管家门钥匙？","能接受突袭的早安吻？","敢让我决定周末行程？",
+      "准备好说「我爱你」了吗？","在一起后，你觉得自己变更好没？","你的人生规划里，有认真考虑我吗",
+      "跟我在一起，是安心多还是累多","重来一次，你还会选我吗","愿意为我改掉一些老习惯吗",
+      "咱俩平时沟通够顺畅吗","你是怕失去我，还是习惯有我了？","对我失望过但憋着不说吗",
+      "我在这段关系里，是被你珍惜的吗","在外人面前，会主动护着我吗","会认真听我说话，还是敷衍应付",
+      "认真想过咱俩长期一起生活的样子吗","吵架时更在意谁对谁错还是我的情绪","愿意为我放慢你自己的节奏吗",
+      "忠诚是主动选择还是被逼的？","伴侣之间钱的事儿该透明吗","介意我比你成功、赚得多吗",
+      "我情绪差时你会主动哄还是躲开？","会把我介绍给你重要的亲友吗","用过冷暴力「惩罚」我吗",
+      "爱一个人，责任多还是感觉多？","新鲜感没了，还愿意用心经营吗","能接受我偶尔情绪崩盘吗",
+      "愿意帮我分担情绪压力吗","把我的付出当成理所当然吗","有认真感谢过我为你做的事吗",
+      "在你心里，我是「不可替代」的吗","会担心有一天失去我吗","更希望我独立还是依赖你？",
+      "在你面前，我能放心做自己吗","相信咱俩能一起解决所有问题吗","我在你生命里重要吗",
+      "会后悔没更珍惜和我一起的时光吗","这段关系值得你付出全部努力吗","就现在，你还愿意坚定选我吗"
+    ]
+  },
+  {
+    name: "真心话大冒险", en: "TRUTH / DARE", word: "GAME",
+    bg: "linear-gradient(150deg, #7f1d1d 0%, #4c1d95 100%)",
+    btn: "linear-gradient(135deg, #dc2626, #7c3aed)",
+    shadow: "rgba(168, 45, 60, 0.45)",
+    items: [
+      "【真】从没敢跟任何人说起过，藏过最深的秘密是什么","【真】做过最后悔、回想依旧特别遗憾的一件事",
+      "【真】最喜欢自己哪里，最嫌弃自己身上什么缺点","【真】有没有偷偷暗恋过人",
+      "【真】手机最舍不得删的照片是哪张","【真】为省钱委屈过自己吗，最长多久没买喜欢的东西",
+      "【真】心里最重要的三个人，分别说说对方对你多重要","【真】撒过最大的谎，到现在都不敢坦白的是什么",
+      "【真】最社死的公开瞬间，当时恨不得立刻原地消失","【真】抛开颜值，选对象最看重哪几个内在优点",
+      "【真】嫉妒过身边谁，羡慕对方拥有自己得不到的幸福","【真】熬夜最久的一次是为了什么",
+      "【真】翻遍喜欢的人所有动态，反复回看舍不得退出吗","【真】熬过最难的日子，当初靠什么撑到现在",
+      "【真】改不掉的坏习惯，明知不好却始终舍不得戒掉","【真】听过最暖心的一句话是什么",
+      "【真】为谁卑微主动过，付出真心却没被好好珍惜","【真】今生最想实现的小愿望，认真说说看",
+      "【真】生气会选择冷战还是直说","【真】小时候最调皮的事，到现在都不敢跟爸妈坦白",
+      "【真】哪句话让你瞬间落泪，至今想起依旧觉得委屈","【真】最难忘的约会细节",
+      "【真】最怕什么东西或场景，让你浑身紧张不敢靠近","【真】送过最廉价却珍贵的礼物是什么",
+      "【真】想道歉却不敢说的人，心里一直亏欠对方什么","【真】你被甩过多少次？",
+      "【真】你做过最对不起朋友的事是什么？","【真】你做过最疯狂的一件事是什么？",
+      "【真】你做过最浪漫的一件事是什么？","【真】你一共恋爱过几次？最刻骨铭心的是哪段？",
+      "【真】你自己做过最丢脸的事是什么？","【真】你收到过最难忘的礼物是什么？",
+      "【真】你哭得最伤心的是哪一次？为什么？","【真】爱情和面包，你会选择哪个？",
+      "【真】你最近一次撒谎是什么时候？撒了什么谎？","【真】你有没有偷偷翻过对象的手机？",
+      "【真】你有没有暗恋过别人？持续了多久？","【真】你理想中的约会是什么样的？",
+      "【真】你有没有被人表白但假装不知道的经历？","【真】你谈过的恋爱里，最遗憾的一件事是什么？",
+      "【真】你最不能接受对象的哪种行为？","【真】你觉得自己的哪一点最吸引异性？",
+      "【真】你会因为感动而和一个人在一起吗？","【真】你有没有和对象冷战过，最长冷战了多久？",
+      "【真】你有没有因为喜欢的人，改变过自己的习惯？","【真】你觉得自己在感情里是主动型还是被动型？",
+      "【真】你有没有过「明明很喜欢，却故意装作不在乎」的时候？","【真】你理想中的另一半，最核心的三个特质是什么？",
+      "【真】你做过最社死的一件事是什么？","【真】你做过最让自己后悔的一件事是什么？",
+      "【真】你有没有在深夜里，给前任发过消息？","【真】你做过最冲动的一件事是什么？",
+      "【真】你觉得自己在感情里，是付出多的一方还是索取多的一方？","【真】你最想删除的一段聊天记录是什么？",
+      "【真】你觉得自己是个长情的人吗？还是喜新厌旧？","【真】如果给你一次机会，你最想改变自己的哪一段经历？",
+      "【冒】对窗外大喊三遍最喜欢的话","【冒】给置顶好友发一句肉麻情话，截图留存",
+      "【冒】模仿五种小动物走路，动作要夸张搞笑","【冒】全程夹子音读一段文案，不许中途笑场",
+      "【冒】对着镜子深情夸自己一分钟","【冒】大声唱一首儿歌，跑调也要唱完整首",
+      "【冒】原地转十圈再走直线，不许扶东西","【冒】复刻一个热门搞笑表情包动作",
+      "【冒】用方言大声念一段文字","【冒】对着空气假装打电话，全程投入演完",
+      "【冒】现场做二十个深蹲，不许偷懒","【冒】真诚夸在场每个人三个优点",
+      "【冒】闭眼让同伴改造发型，完成后自信展示","【冒】发一张搞笑丑照朋友圈，十分钟内不许删",
+      "【冒】模仿明星经典舞台动作，气场全开","【冒】踮脚站立坚持一分钟，分心就算失败",
+      "【冒】搞怪语调背诵一首古诗","【冒】现场跳一段可爱简单的舞蹈",
+      "【冒】外放短视频对口型，沉浸式表演","【冒】对所有人比心表白，眼神不许躲闪",
+      "【冒】学机器人走路说话一分钟","【冒】发「好久不见」给老朋友，截图不许撤回",
+      "【冒】在手上画一个可爱图案，展示给大家看","【冒】快速念完一段绕口令，不卡顿不咬舌"
+    ]
+  }
+];
+
+// ==================== 核心逻辑（纯 ES5，兼容所有微信内核） ====================
+var TAB_ICONS = ["💗", "🌙", "🍋", "✅", "🎲"];
+
+var cur = 0;
+var items = [];
+var cursor = 0;
+var timer = null;
+var playing = false;
+var interval = 200;
+
+function $(id) { return document.getElementById(id); }
+var card = $("card"), qText = $("qText"), idxText = $("idxText"),
+    catName = $("catName"), catEn = $("catEn"), catWord = $("catWord"),
+    playBtn = $("playBtn"), pausedBadge = $("pausedBadge"),
+    speedRange = $("speedRange"), speedVal = $("speedVal"), tabsEl = $("tabs");
+
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+function shuffle(list) {
+  var a = list.slice(0);
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+  return a;
+}
+
+// 文字瞬时替换：不做位移/淡入，靠高频率切换形成心跳跳动感
+function setText(t) {
+  if (qText.textContent !== t) qText.textContent = t;
+  // 部分老内核不支持 textContent，兜底 innerText
+  else if (qText.innerText !== t) qText.innerText = t;
+}
+
+function render() {
+  if (!items.length) return;
+  var i = ((cursor % items.length) + items.length) % items.length;
+  setText(items[i]);
+  idxText.textContent = pad2(i + 1) + " / " + items.length;
+}
+
+function stopTimer() {
+  if (timer) { clearInterval(timer); timer = null; }
+}
+function startTimer() {
+  stopTimer();
+  var ms = interval;
+  if (ms < 80) ms = 80;
+  timer = setInterval(function () { cursor += 1; render(); }, ms);
+}
+function play() {
+  if (!items.length) return;
+  playing = true;
+  playBtn.textContent = "⏸ 暂停";
+  pausedBadge.className = "paused-badge";
+}
+function pause() {
+  playing = false;
+  stopTimer();
+  playBtn.textContent = "▶ 播放";
+  pausedBadge.className = "paused-badge show";
+}
+function toggle() {
+  if (playing) pause(); else play();
+}
+
+function applySkin() {
+  var c = CATS[cur];
+  card.style.setProperty("--skin-bg", c.bg);
+  card.style.setProperty("--skin-btn", c.btn);
+  card.style.setProperty("--skin-shadow", c.shadow);
+  catName.textContent = c.name;
+  catEn.textContent = c.en;
+  catWord.textContent = c.word;
+}
+
+function setCssVar(el, name, value) {
+  if (el.style.setProperty) el.style.setProperty(name, value);
+  else el.setAttribute("style", el.getAttribute("style") + ";" + name + ":" + value);
+}
+
+function loadCat(key) {
+  cur = key;
+  var c = CATS[cur];
+  items = c.items.slice(0);
+  cursor = 0;
+  applySkin();
+  render();
+  var tabs = tabsEl.children;
+  for (var i = 0; i < tabs.length; i++) {
+    var b = tabs[i];
+    if (Number(b.getAttribute("data-key")) === cur) {
+      b.className = "tab on";
+      b.style.setProperty("--skin-btn", c.btn);
+      b.style.setProperty("--skin-shadow", c.shadow);
+    } else {
+      b.className = "tab";
+    }
+  }
+  play();
+}
+
+// ===== Tab 生成 =====
+function buildTabs() {
+  for (var i = 0; i < CATS.length; i++) {
+    (function (idx) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab";
+      b.setAttribute("data-key", idx);
+      b.textContent = TAB_ICONS[idx] + " " + CATS[idx].name;
+      b.onclick = function () { loadCat(idx); };
+      tabsEl.appendChild(b);
+    })(i);
+  }
+}
+
+// ===== 事件绑定 =====
+function bindEvents() {
+  playBtn.onclick = function (e) { toggle(); };
+  card.onclick = function () { toggle(); };
+  $("nextBtn").onclick = function (e) { cursor += 1; render(); };
+  $("prevBtn").onclick = function (e) { cursor -= 1; render(); };
+  $("shuffleBtn").onclick = function () {
+    items = shuffle(items);
+    cursor = 0;
+    render();
+  };
+  speedRange.oninput = function () {
+    interval = Number(speedRange.value) || 200;
+    speedVal.textContent = interval + "ms";
+    try { localStorage.setItem("nighttalk_speed", String(interval)); } catch (e) {}
+    if (playing) startTimer();
+  };
+  // 老内核只有 onchange
+  speedRange.onchange = speedRange.oninput;
+}
+
+// ===== 初始化 =====
+function init() {
+  try {
+    var s = Number(localStorage.getItem("nighttalk_speed"));
+    if (s >= 100) {
+      interval = s;
+      speedRange.value = String(s);
+      speedVal.textContent = s + "ms";
+    }
+  } catch (e) {}
+  buildTabs();
+  bindEvents();
+  loadCat(0);
+  play();
+}
+
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  setTimeout(init, 0);
+} else {
+  document.addEventListener("DOMContentLoaded", function () { setTimeout(init, 0); });
+}
+</script>
+</body>
+</html>
