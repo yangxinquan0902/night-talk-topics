@@ -1231,8 +1231,9 @@ function bindEvents() {
   }
   favBtn.onclick = function (e) { toggleFav(e); };
   playBtn.onclick = function () { toggle(); };
-  $("nextBtn").onclick = function () { if (!drawing) { cursor += 1; render(); } };
-  $("prevBtn").onclick = function () { if (!drawing) { cursor -= 1; render(); } };
+  // 翻页后停在那一题：自动暂停，方便两人慢慢聊
+  $("nextBtn").onclick = function () { if (!drawing) { pause(); cursor += 1; render(); } };
+  $("prevBtn").onclick = function () { if (!drawing) { pause(); cursor -= 1; render(); } };
   $("luckyBtn").onclick = function () { drawLucky(); };
 
   favListBtn.onclick = function () { openDrawer(); };
