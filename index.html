@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#120718" />
-<title>情侣夜聊必备话题</title>
+<title>情侣升温小游戏</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { color-scheme: dark; }
@@ -223,7 +223,10 @@
   }
   .card-word {
     position: absolute;
-    bottom: -14px; right: -8px;
+    bottom: 14px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     font-size: 84px;
     font-weight: 900;
     font-style: italic;
@@ -342,7 +345,7 @@
 
   <div class="header">
     <div class="heart">💗</div>
-    <div class="t">情侣夜聊必备话题</div>
+    <div class="t">情侣升温小游戏</div>
     <div class="sub">NIGHT TALK</div>
   </div>
 
@@ -594,7 +597,7 @@ var TAB_ICONS = ["💗", "🌙", "🍋", "✅", "🎲"];
 var cur = 0;
 var items = [];
 var cursor = 0;
-var timer = null;
+var timer = 0;
 var playing = false;
 var interval = 200;
 
@@ -632,19 +635,41 @@ function render() {
 }
 
 function stopTimer() {
-  if (timer) { clearInterval(timer); timer = null; }
+  if (timer) { cancelAnimationFrame(timer); timer = 0; }
+  rafId = 0;
 }
+
+// 用 requestAnimationFrame + 时间戳驱动：即使内核节流 setInterval，
+// 时间戳累积也能保证速度准确，恢复可见后立刻续上
+var lastTick = 0;
+var rafId = 0;
+
+function loop(now) {
+  if (!playing) return;
+  if (!lastTick) lastTick = now;
+  if (now - lastTick >= interval) {
+    // 补齐停顿期间落后的帧数，速度始终精准
+    var step = Math.floor((now - lastTick) / interval);
+    lastTick += step * interval;
+    cursor += step;
+    render();
+  }
+  rafId = requestAnimationFrame(loop);
+  timer = rafId;
+}
+
 function startTimer() {
   stopTimer();
-  var ms = interval;
-  if (ms < 80) ms = 80;
-  timer = setInterval(function () { cursor += 1; render(); }, ms);
+  lastTick = 0;
+  rafId = requestAnimationFrame(loop);
+  timer = rafId;
 }
 function play() {
   if (!items.length) return;
   playing = true;
   playBtn.textContent = "⏸ 暂停";
   pausedBadge.className = "paused-badge";
+  startTimer();
 }
 function pause() {
   playing = false;
@@ -708,11 +733,27 @@ function buildTabs() {
 }
 
 // ===== 事件绑定 =====
+// touchend + click 双通道，加 500ms 去重窗口：老内核只用 touch、新内核走 click，
+// 都不会出现「点了没反应」或「一次点击触发两次」
+var lastTapTime = 0;
+
+function onTap(e) {
+  var now = new Date().getTime();
+  if (now - lastTapTime < 500) return; // 同一次触摸的 touchend+click 去重
+  lastTapTime = now;
+  toggle();
+}
+
 function bindEvents() {
-  playBtn.onclick = function (e) { toggle(); };
-  card.onclick = function () { toggle(); };
-  $("nextBtn").onclick = function (e) { cursor += 1; render(); };
-  $("prevBtn").onclick = function (e) { cursor -= 1; render(); };
+  if (card.addEventListener) {
+    card.addEventListener("touchend", function (e) { e.preventDefault(); onTap(); }, false);
+    card.addEventListener("click", onTap, false);
+  } else {
+    card.onclick = onTap;
+  }
+  playBtn.onclick = function () { toggle(); };
+  $("nextBtn").onclick = function () { cursor += 1; render(); };
+  $("prevBtn").onclick = function () { cursor -= 1; render(); };
   $("shuffleBtn").onclick = function () {
     items = shuffle(items);
     cursor = 0;
@@ -729,6 +770,7 @@ function bindEvents() {
 }
 
 // ===== 初始化 =====
+// 脚本在 body 末尾，DOM 已就绪，直接同步执行，打开即播放
 function init() {
   try {
     var s = Number(localStorage.getItem("nighttalk_speed"));
@@ -744,11 +786,7 @@ function init() {
   play();
 }
 
-if (document.readyState === "complete" || document.readyState === "interactive") {
-  setTimeout(init, 0);
-} else {
-  document.addEventListener("DOMContentLoaded", function () { setTimeout(init, 0); });
-}
+init();
 </script>
 </body>
 </html>
