@@ -72,6 +72,23 @@
     letter-spacing: 1.5px;
   }
   .header .sub { margin-left: auto; font-size: 11px; color: rgba(244, 236, 248, 0.45); letter-spacing: 1px; }
+  .fav-list-btn {
+    margin-left: 10px;
+    padding: 7px 13px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 130, 180, 0.4);
+    background: rgba(255, 61, 119, 0.12);
+    color: #ffc7dd;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+  }
+  .fav-list-btn:active { -webkit-transform: scale(0.94); transform: scale(0.94); }
+  .fav-list-btn .n { color: #ff5c8f; font-weight: 800; }
 
   /* ===== 分类 Tab ===== */
   .tabs {
@@ -109,7 +126,6 @@
   .tab.on {
     color: #fff;
     border-color: transparent;
-    background: var(--skin-btn, -webkit-linear-gradient(135deg, #ff3d77, #b44bff));
     background-image: var(--skin-btn, linear-gradient(135deg, #ff3d77, #b44bff));
     box-shadow: 0 6px 18px var(--skin-shadow, rgba(255, 61, 119, 0.4));
   }
@@ -139,7 +155,7 @@
     flex-direction: column;
     -webkit-align-items: center;
     align-items: center;
-    padding: 66px 26px 86px;
+    padding: 66px 26px 92px;
     text-align: center;
     cursor: pointer;
     background-image: var(--skin-bg, linear-gradient(150deg, #ff2e63 0%, #b44bff 100%));
@@ -165,25 +181,64 @@
     font-weight: 600;
     letter-spacing: 2px;
     color: rgba(255, 255, 255, 0.92);
-    z-index: 3;
+    z-index: 5;
   }
   .card-top .dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: #fff;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    -webkit-animation: beat 1s ease-in-out infinite;
+    animation: beat 1s ease-in-out infinite;
+  }
+  .fav-btn {
+    position: absolute;
+    top: 12px; right: 16px;
+    width: 42px; height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.22);
+    color: #fff;
+    font-size: 20px;
+    line-height: 42px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    z-index: 6;
+    -webkit-transition: -webkit-transform 0.18s ease;
+    transition: transform 0.18s ease;
+  }
+  .fav-btn:active { -webkit-transform: scale(0.85); transform: scale(0.85); }
+  .fav-btn.on {
+    background: rgba(255, 255, 255, 0.92);
+    color: #ff2e63;
+    -webkit-animation: pop 0.35s ease;
+    animation: pop 0.35s ease;
+  }
+  @-webkit-keyframes pop {
+    0% { -webkit-transform: scale(1); transform: scale(1); }
+    40% { -webkit-transform: scale(1.35); transform: scale(1.35); }
+    100% { -webkit-transform: scale(1); transform: scale(1); }
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    100% { transform: scale(1); }
   }
   .paused-badge {
     position: absolute;
-    top: 18px; right: 22px;
+    top: 20px; left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     padding: 4px 12px;
     font-size: 11.5px;
     letter-spacing: 2px;
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.32);
     color: rgba(255, 255, 255, 0.95);
-    z-index: 3;
+    z-index: 4;
     opacity: 0;
     transition: opacity 0.2s ease;
+    white-space: nowrap;
   }
   .paused-badge.show { opacity: 1; }
 
@@ -212,13 +267,13 @@
   }
   .card-foot {
     position: absolute;
-    bottom: 22px; left: 26px; right: 26px;
+    bottom: 26px; left: 26px; right: 26px;
     display: -webkit-flex; display: flex;
     -webkit-align-items: center; align-items: center;
     -webkit-justify-content: space-between; justify-content: space-between;
     font-size: 12.5px;
     letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.85);
     z-index: 3;
   }
   .card-word {
@@ -236,6 +291,42 @@
     white-space: nowrap;
     pointer-events: none;
     z-index: 1;
+  }
+  .progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 4px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.14);
+    z-index: 4;
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+  }
+  .progress i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 0 4px 4px 0;
+    -webkit-transition: width 0.4s ease;
+    transition: width 0.4s ease;
+  }
+
+  /* 爱心迸发粒子 */
+  .hp {
+    position: absolute;
+    font-size: 18px;
+    pointer-events: none;
+    z-index: 8;
+    opacity: 1;
+  }
+  @-webkit-keyframes floatUp {
+    0% { opacity: 1; -webkit-transform: translate(0, 0) scale(0.6) rotate(0deg); transform: translate(0, 0) scale(0.6) rotate(0deg); }
+    100% { opacity: 0; -webkit-transform: translate(var(--dx, 0px), -130px) scale(1.25) rotate(var(--rot, 20deg)); transform: translate(var(--dx, 0px), -130px) scale(1.25) rotate(var(--rot, 20deg)); }
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx, 0px), -130px) scale(1.25) rotate(var(--rot, 20deg)); }
   }
 
   /* ===== 控制条 ===== */
@@ -270,13 +361,18 @@
   }
   .cbtn:active { -webkit-transform: scale(0.95); transform: scale(0.95); }
   .cbtn.play {
-    -webkit-flex: 1.6;
-    flex: 1.6;
+    -webkit-flex: 1.4;
+    flex: 1.4;
     border: none;
     color: #fff;
     background-image: var(--skin-btn, linear-gradient(135deg, #ff3d77, #b44bff));
     background-color: #ff3d77;
     box-shadow: 0 8px 22px var(--skin-shadow, rgba(255, 61, 119, 0.4));
+  }
+  .cbtn.lucky {
+    border: 1px solid rgba(255, 200, 90, 0.45);
+    background: rgba(255, 170, 40, 0.12);
+    color: #ffd98f;
   }
 
   /* ===== 速度调节 ===== */
@@ -321,9 +417,117 @@
     color: #fff;
     opacity: 0.85;
   }
-  .hint { font-size: 11px; color: rgba(244, 236, 248, 0.4); letter-spacing: 1.5px; text-align: center; padding-bottom: 4px; -webkit-flex-shrink: 0; flex-shrink: 0; }
+  .hint { font-size: 11px; color: rgba(244, 236, 248, 0.4); letter-spacing: 1px; text-align: center; padding-bottom: 2px; -webkit-flex-shrink: 0; flex-shrink: 0; }
 
-  /* ===== 调试错误提示（正常情况不显示） ===== */
+  /* ===== 心动清单抽屉 ===== */
+  .drawer-mask {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .drawer-mask.show { opacity: 1; pointer-events: auto; }
+  .drawer {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    margin: 0 auto;
+    max-width: 490px;
+    max-height: 72vh;
+    background: #1d1226;
+    border: 1px solid rgba(255, 130, 180, 0.25);
+    border-bottom: none;
+    border-radius: 24px 24px 0 0;
+    z-index: 51;
+    -webkit-transform: translateY(105%);
+    transform: translateY(105%);
+    transition: -webkit-transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+  .drawer.show { -webkit-transform: translateY(0); transform: translateY(0); }
+  .d-head {
+    display: -webkit-flex; display: flex;
+    -webkit-align-items: center; align-items: center;
+    padding: 16px 18px 10px;
+    -webkit-flex-shrink: 0; flex-shrink: 0;
+  }
+  .d-head .t { font-size: 16px; font-weight: 800; letter-spacing: 1px; }
+  .d-head .cnt { font-size: 12px; color: #ff5c8f; font-weight: 700; margin-left: 8px; }
+  .d-head .sp { -webkit-flex: 1; flex: 1; }
+  .d-sound, .d-clear {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: #d8cbe6;
+    font-size: 12px;
+    font-family: inherit;
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 8px;
+  }
+  .d-list { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 14px 20px; }
+  .d-item {
+    display: -webkit-flex; display: flex;
+    -webkit-align-items: center; align-items: center;
+    gap: 10px;
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    cursor: pointer;
+  }
+  .d-item:active { background: rgba(255, 255, 255, 0.05); }
+  .d-tag {
+    -webkit-flex-shrink: 0; flex-shrink: 0;
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: #ffd7e6;
+    background: rgba(255, 61, 119, 0.18);
+    border: 1px solid rgba(255, 100, 150, 0.35);
+  }
+  .d-text { -webkit-flex: 1; flex: 1; font-size: 13.5px; line-height: 1.55; color: #ecdfef; word-break: break-all; text-align: left; }
+  .d-del {
+    -webkit-flex-shrink: 0; flex-shrink: 0;
+    width: 30px; height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: #b9a6c9;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+  }
+  .d-empty { text-align: center; padding: 34px 10px; color: rgba(236, 223, 239, 0.4); font-size: 13px; line-height: 2; }
+
+  /* toast */
+  .toast {
+    position: fixed;
+    left: 50%; bottom: 96px;
+    -webkit-transform: translateX(-50%) translateY(8px);
+    transform: translateX(-50%) translateY(8px);
+    padding: 9px 18px;
+    border-radius: 24px;
+    background: rgba(20, 10, 26, 0.92);
+    border: 1px solid rgba(255, 130, 180, 0.4);
+    color: #ffd7e6;
+    font-size: 13px;
+    letter-spacing: 1px;
+    z-index: 60;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, -webkit-transform 0.25s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; -webkit-transform: translateX(-50%) translateY(0); transform: translateX(-50%) translateY(0); }
+
+  /* ===== 调试错误提示 ===== */
   .err-box {
     display: none;
     width: 100%;
@@ -346,7 +550,7 @@
   <div class="header">
     <div class="heart">💗</div>
     <div class="t">情侣升温小游戏</div>
-    <div class="sub">NIGHT TALK</div>
+    <button class="fav-list-btn" id="favListBtn" type="button">💕 心动 <span class="n" id="favCnt">0</span></button>
   </div>
 
   <div class="tabs" id="tabs"></div>
@@ -354,17 +558,19 @@
   <div class="stage">
     <div class="card" id="card">
       <div class="card-top"><span class="dot"></span><span id="catName">夜聊甜话</span></div>
+      <button class="fav-btn" id="favBtn" type="button">♡</button>
       <div class="paused-badge" id="pausedBadge">已暂停 · 点击继续</div>
       <div class="q-wrap"><div class="q-text" id="qText">加载中...</div></div>
-      <div class="card-foot"><span class="idx" id="idxText">01 / 60</span><span id="catEn">SWEET</span></div>
+      <div class="card-foot"><span class="idx" id="idxText">01 / 60</span><span id="viewedText">已聊 0</span></div>
       <div class="card-word" id="catWord">LOVE</div>
+      <div class="progress"><i id="progBar"></i></div>
     </div>
 
     <div class="ctrl">
       <button class="cbtn" id="prevBtn" type="button">上一题</button>
       <button class="cbtn play" id="playBtn" type="button">▶ 播放</button>
       <button class="cbtn" id="nextBtn" type="button">下一题</button>
-      <button class="cbtn" id="shuffleBtn" type="button">🔀</button>
+      <button class="cbtn lucky" id="luckyBtn" type="button">🎰 手气</button>
     </div>
 
     <div class="speed-row">
@@ -372,12 +578,27 @@
       <input type="range" id="speedRange" min="100" max="1200" step="20" value="200" />
       <span class="val" id="speedVal">200ms</span>
     </div>
-    <div class="hint">点卡片暂停 / 继续 · 切分类自动播放</div>
+    <div class="hint">点卡片暂停 · ♡ 收藏心动题 · 🎰 缘分抽一题</div>
     <div class="err-box" id="errBox"></div>
   </div>
 
+  <!-- 心动清单抽屉 -->
+  <div class="drawer-mask" id="drawerMask"></div>
+  <div class="drawer" id="drawer">
+    <div class="d-head">
+      <span class="t">💕 我们的心动清单</span>
+      <span class="cnt" id="dCnt">0</span>
+      <span class="sp"></span>
+      <button class="d-sound" id="soundBtn" type="button">♪ 音效: 关</button>
+      <button class="d-clear" id="clearBtn" type="button">清空</button>
+    </div>
+    <div class="d-list" id="dList"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
 <script>
-// ==================== 兼容性兜底：任何脚本报错都显示在页面上 ====================
+// ==================== 兼容性兜底 ====================
 window.onerror = function (msg, src, line) {
   var el = document.getElementById("errBox");
   if (el) {
@@ -591,8 +812,9 @@ var CATS = [
   }
 ];
 
-// ==================== 核心逻辑（纯 ES5，兼容所有微信内核） ====================
+// ==================== 基础状态（纯 ES5） ====================
 var TAB_ICONS = ["💗", "🌙", "🍋", "✅", "🎲"];
+var HEART_CHARS = ["💗", "💕", "💖", "🩷", "❤️", "🤍"];
 
 var cur = 0;
 var items = [];
@@ -600,22 +822,139 @@ var cursor = 0;
 var timer = 0;
 var playing = false;
 var interval = 200;
+var drawing = false;
+var lastTick = 0;
+var rafId = 0;
+
+// 收藏与进度
+var favs = [];        // [{c: 分类, t: 文本}]
+var viewed = {};      // { "分类|文本": 1 }
+var doneFlags = {};   // 每组聊完庆祝过
+var soundOn = false;
 
 function $(id) { return document.getElementById(id); }
 var card = $("card"), qText = $("qText"), idxText = $("idxText"),
-    catName = $("catName"), catEn = $("catEn"), catWord = $("catWord"),
+    catName = $("catName"), catWord = $("catWord"),
     playBtn = $("playBtn"), pausedBadge = $("pausedBadge"),
-    speedRange = $("speedRange"), speedVal = $("speedVal"), tabsEl = $("tabs");
+    speedRange = $("speedRange"), speedVal = $("speedVal"), tabsEl = $("tabs"),
+    favBtn = $("favBtn"), favCnt = $("favCnt"), favListBtn = $("favListBtn"),
+    viewedText = $("viewedText"), progBar = $("progBar"),
+    drawer = $("drawer"), drawerMask = $("drawerMask"), dList = $("dList"), dCnt = $("dCnt"),
+    toastEl = $("toast");
 
 function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
+function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+function saveFavs() {
+  var s = "";
+  for (var i = 0; i < favs.length; i++) s += favs[i].c + "\u0001" + favs[i].t + "\u0002";
+  store("nt2_favs", s);
+}
+function loadFavs() {
+  favs = [];
+  var s = load("nt2_favs");
+  if (!s) return;
+  var parts = s.split("\u0002");
+  for (var i = 0; i < parts.length; i++) {
+    if (!parts[i]) continue;
+    var p = parts[i].split("\u0001");
+    if (p.length === 2 && CATS[p[0]]) favs.push({ c: Number(p[0]), t: p[1] });
+  }
+}
+function saveViewed() {
+  var s = "";
+  for (var k in viewed) if (viewed[k]) s += k + "\u0002";
+  store("nt2_viewed", s);
+  var d = "";
+  for (var c in doneFlags) if (doneFlags[c]) d += c + ",";
+  store("nt2_done", d);
+}
+function loadViewed() {
+  viewed = {};
+  var s = load("nt2_viewed");
+  if (s) {
+    var parts = s.split("\u0002");
+    for (var i = 0; i < parts.length; i++) if (parts[i]) viewed[parts[i]] = 1;
+  }
+  var d = load("nt2_done") || "";
+  doneFlags = {};
+  var dp = d.split(",");
+  for (var j = 0; j < dp.length; j++) if (dp[j] !== "") doneFlags[dp[j]] = 1;
+}
+
+function vib(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
+
+// ==================== 心跳音效（Web Audio 合成，无音频文件） ====================
+var audioCtx = null;
+function playLub() {
+  if (!soundOn) return;
+  try {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!audioCtx) audioCtx = new AC();
+    if (audioCtx.state === "suspended" && audioCtx.resume) audioCtx.resume();
+    var thump = function (delay, freq, vol) {
+      var t0 = audioCtx.currentTime + delay;
+      var osc = audioCtx.createOscillator();
+      var g = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, t0);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.55, t0 + 0.14);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+      osc.connect(g); g.connect(audioCtx.destination);
+      osc.start(t0); osc.stop(t0 + 0.2);
+    };
+    thump(0, 62, 0.5);      // 咚
+    thump(0.19, 78, 0.38);  // 咚（轻）
+  } catch (e) {}
+}
+
+// ==================== 粒子 / toast ====================
+var heartColors = ["#ffffff", "#ffd7e6", "#ffb3d1", "#fff3b0", "#d9b8ff"];
+function burst(n, originX) {
+  var cx = (originX === undefined ? card.offsetWidth / 2 : originX);
+  var cy = card.offsetHeight / 2;
+  for (var i = 0; i < (n || 10); i++) {
+    (function (k) {
+      var sp = document.createElement("span");
+      sp.className = "hp";
+      var size = 14 + Math.floor(Math.random() * 14);
+      sp.style.left = (cx + (Math.random() - 0.5) * 70) + "px";
+      sp.style.top = (cy + (Math.random() - 0.5) * 50) + "px";
+      sp.style.fontSize = size + "px";
+      sp.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+      var isChar = Math.random() > 0.5;
+      if (isChar) sp.textContent = HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)];
+      else { sp.textContent = "●"; sp.style.fontSize = Math.floor(size / 3) + "px"; }
+      sp.style.setProperty("--dx", Math.round((Math.random() - 0.5) * 160) + "px");
+      sp.style.setProperty("--rot", Math.round((Math.random() - 0.5) * 90) + "deg");
+      var dur = 0.9 + Math.random() * 0.7;
+      sp.style.webkitAnimation = "floatUp " + dur + "s ease-out forwards";
+      sp.style.animation = "floatUp " + dur + "s ease-out forwards";
+      card.appendChild(sp);
+      setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, (dur + 0.1) * 1000);
+    })(i);
+  }
+}
+
+var toastTimer = 0;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.className = "toast show";
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { toastEl.className = "toast"; }, 1800);
+}
+
+// ==================== 核心逻辑 ====================
 function shuffle(list) {
   var a = list.slice(0);
   for (var i = a.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
-    var tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
   }
   return a;
 }
@@ -623,15 +962,58 @@ function shuffle(list) {
 // 文字瞬时替换：不做位移/淡入，靠高频率切换形成心跳跳动感
 function setText(t) {
   if (qText.textContent !== t) qText.textContent = t;
-  // 部分老内核不支持 textContent，兜底 innerText
-  else if (qText.innerText !== t) qText.innerText = t;
+}
+
+function currentKey() {
+  if (!items.length || cursor < 0) return "";
+  var i = ((cursor % items.length) + items.length) % items.length;
+  return cur + "|" + items[i];
+}
+
+function viewedCount(c) {
+  var n = 0;
+  for (var k in viewed) if (viewed[k] && k.indexOf(c + "|") === 0) n++;
+  return n;
+}
+
+function updateFavBtn() {
+  var t = items.length ? items[((cursor % items.length) + items.length) % items.length] : "";
+  var isFav = false;
+  for (var i = 0; i < favs.length; i++) if (favs[i].c === cur && favs[i].t === t) { isFav = true; break; }
+  favBtn.className = isFav ? "fav-btn on" : "fav-btn";
+  favBtn.textContent = isFav ? "❤" : "♡";
+}
+
+function updateProgress() {
+  var total = items.length || CATS[cur].items.length;
+  var n = viewedCount(cur);
+  viewedText.textContent = "已聊 " + n + " / " + total;
+  progBar.style.width = (total ? Math.round(n / total * 100) : 0) + "%";
 }
 
 function render() {
   if (!items.length) return;
   var i = ((cursor % items.length) + items.length) % items.length;
-  setText(items[i]);
+  var t = items[i];
+  setText(t);
   idxText.textContent = pad2(i + 1) + " / " + items.length;
+  var key = cur + "|" + t;
+  if (!viewed[key]) {
+    viewed[key] = 1;
+    saveViewed();
+    var total = items.length;
+    var n = viewedCount(cur);
+    if (n >= total && !doneFlags[cur]) {
+      doneFlags[cur] = 1;
+      saveViewed();
+      burst(18);
+      vib(60);
+      playLub();
+      toast("🎉 「" + CATS[cur].name + "」全部聊完啦，你们真棒！");
+    }
+  }
+  updateFavBtn();
+  updateProgress();
 }
 
 function stopTimer() {
@@ -639,16 +1021,11 @@ function stopTimer() {
   rafId = 0;
 }
 
-// 用 requestAnimationFrame + 时间戳驱动：即使内核节流 setInterval，
-// 时间戳累积也能保证速度准确，恢复可见后立刻续上
-var lastTick = 0;
-var rafId = 0;
-
+// rAF + 时间戳驱动：内核节流也不影响节奏，恢复可见后立刻续上
 function loop(now) {
   if (!playing) return;
   if (!lastTick) lastTick = now;
   if (now - lastTick >= interval) {
-    // 补齐停顿期间落后的帧数，速度始终精准
     var step = Math.floor((now - lastTick) / interval);
     lastTick += step * interval;
     cursor += step;
@@ -664,8 +1041,9 @@ function startTimer() {
   rafId = requestAnimationFrame(loop);
   timer = rafId;
 }
+
 function play() {
-  if (!items.length) return;
+  if (!items.length || drawing) return;
   playing = true;
   playBtn.textContent = "⏸ 暂停";
   pausedBadge.className = "paused-badge";
@@ -678,6 +1056,7 @@ function pause() {
   pausedBadge.className = "paused-badge show";
 }
 function toggle() {
+  if (drawing) return;
   if (playing) pause(); else play();
 }
 
@@ -687,16 +1066,11 @@ function applySkin() {
   card.style.setProperty("--skin-btn", c.btn);
   card.style.setProperty("--skin-shadow", c.shadow);
   catName.textContent = c.name;
-  catEn.textContent = c.en;
   catWord.textContent = c.word;
 }
 
-function setCssVar(el, name, value) {
-  if (el.style.setProperty) el.style.setProperty(name, value);
-  else el.setAttribute("style", el.getAttribute("style") + ";" + name + ":" + value);
-}
-
-function loadCat(key) {
+function loadCat(key, cb) {
+  cancelDraw(); // 切分类时取消进行中的抽取动画
   cur = key;
   var c = CATS[cur];
   items = c.items.slice(0);
@@ -705,19 +1079,109 @@ function loadCat(key) {
   render();
   var tabs = tabsEl.children;
   for (var i = 0; i < tabs.length; i++) {
-    var b = tabs[i];
-    if (Number(b.getAttribute("data-key")) === cur) {
-      b.className = "tab on";
-      b.style.setProperty("--skin-btn", c.btn);
-      b.style.setProperty("--skin-shadow", c.shadow);
+    if (Number(tabs[i].getAttribute("data-key")) === cur) {
+      tabs[i].className = "tab on";
+      tabs[i].style.setProperty("--skin-btn", c.btn);
+      tabs[i].style.setProperty("--skin-shadow", c.shadow);
     } else {
-      b.className = "tab";
+      tabs[i].className = "tab";
     }
   }
   play();
+  if (cb) cb();
 }
 
-// ===== Tab 生成 =====
+// ==================== 收藏 ====================
+function toggleFav(e) {
+  var t = items.length ? items[((cursor % items.length) + items.length) % items.length] : "";
+  if (!t) return;
+  var idx = -1;
+  for (var i = 0; i < favs.length; i++) if (favs[i].c === cur && favs[i].t === t) { idx = i; break; }
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+    toast("已从心动清单移出");
+  } else {
+    favs.push({ c: cur, t: t });
+    toast("已存入心动清单 💕");
+    burst(8, card.offsetWidth - 40);
+    vib(25);
+    playLub();
+  }
+  saveFavs();
+  renderFavCount();
+  updateFavBtn();
+  if (drawer.className.indexOf("show") >= 0) renderDrawer();
+}
+
+function renderFavCount() {
+  favCnt.textContent = favs.length;
+  dCnt.textContent = favs.length;
+}
+
+// ==================== 心动清单抽屉 ====================
+function renderDrawer() {
+  if (!favs.length) {
+    dList.innerHTML = '<div class="d-empty">还没有收藏<br/>聊到心动的题，点右上角 ♡ 收起来</div>';
+    return;
+  }
+  var html = "";
+  for (var i = 0; i < favs.length; i++) {
+    var f = favs[i];
+    var name = CATS[f.c] ? CATS[f.c].name : "话题";
+    html += '<div class="d-item" data-i="' + i + '">'
+         +    '<span class="d-tag">' + name + '</span>'
+         +    '<span class="d-text">' + f.t.replace(/&/g, "&amp;").replace(/</g, "&lt;") + '</span>'
+         +    '<button class="d-del" data-del="' + i + '" type="button">✕</button>'
+         + '</div>';
+  }
+  dList.innerHTML = html;
+}
+
+function openDrawer() {
+  renderDrawer();
+  drawer.className = "drawer show";
+  drawerMask.className = "drawer-mask show";
+}
+function closeDrawer() {
+  drawer.className = "drawer";
+  drawerMask.className = "drawer-mask";
+}
+
+// ==================== 手气抽取（老虎机减速） ====================
+var drawToken = 0;
+function cancelDraw() {
+  drawToken++;
+  drawing = false;
+}
+function drawLucky() {
+  if (drawing || !items.length) return;
+  drawing = true;
+  var myToken = ++drawToken;
+  var wasPlaying = playing;
+  if (playing) pause();
+  pausedBadge.className = "paused-badge";
+  var delays = [70, 70, 80, 90, 100, 115, 135, 160, 195, 240, 300, 380, 480, 600];
+  var idx = 0;
+  var step = function () {
+    if (myToken !== drawToken) return; // 被取消（如切换了分类）
+    cursor = Math.floor(Math.random() * items.length);
+    render();
+    if (idx < delays.length) {
+      var d = delays[idx]; idx++;
+      setTimeout(step, d);
+    } else {
+      drawing = false;
+      pausedBadge.className = "paused-badge show";
+      burst(14);
+      vib(40);
+      playLub();
+      toast("🍀 缘分让你们聊这一题");
+    }
+  };
+  step();
+}
+
+// ==================== Tab ====================
 function buildTabs() {
   for (var i = 0; i < CATS.length; i++) {
     (function (idx) {
@@ -732,14 +1196,11 @@ function buildTabs() {
   }
 }
 
-// ===== 事件绑定 =====
-// touchend + click 双通道，加 500ms 去重窗口：老内核只用 touch、新内核走 click，
-// 都不会出现「点了没反应」或「一次点击触发两次」
+// ==================== 事件绑定 ====================
 var lastTapTime = 0;
-
-function onTap(e) {
+function onTap() {
   var now = new Date().getTime();
-  if (now - lastTapTime < 500) return; // 同一次触摸的 touchend+click 去重
+  if (now - lastTapTime < 500) return;
   lastTapTime = now;
   toggle();
 }
@@ -751,37 +1212,86 @@ function bindEvents() {
   } else {
     card.onclick = onTap;
   }
+  favBtn.onclick = function (e) { toggleFav(e); };
   playBtn.onclick = function () { toggle(); };
-  $("nextBtn").onclick = function () { cursor += 1; render(); };
-  $("prevBtn").onclick = function () { cursor -= 1; render(); };
-  $("shuffleBtn").onclick = function () {
-    items = shuffle(items);
-    cursor = 0;
-    render();
+  $("nextBtn").onclick = function () { if (!drawing) { cursor += 1; render(); } };
+  $("prevBtn").onclick = function () { if (!drawing) { cursor -= 1; render(); } };
+  $("luckyBtn").onclick = function () { drawLucky(); };
+
+  favListBtn.onclick = function () { openDrawer(); };
+  drawerMask.onclick = closeDrawer;
+  $("clearBtn").onclick = function () {
+    if (!favs.length) { toast("清单本来就是空的呀"); return; }
+    favs = [];
+    saveFavs();
+    renderFavCount();
+    renderDrawer();
+    updateFavBtn();
+    toast("已清空心动清单");
   };
+  $("soundBtn").onclick = function () {
+    soundOn = !soundOn;
+    this.textContent = soundOn ? "♪ 音效: 开" : "♪ 音效: 关";
+    store("nt2_sound", soundOn ? "1" : "0");
+    if (soundOn) playLub();
+  };
+
+  // 抽屉内点击：跳回那道题 / 删除
+  dList.onclick = function (e) {
+    var el = e.target;
+    while (el && el !== dList) {
+      if (el.getAttribute && el.getAttribute("data-del") !== null) {
+        var di = Number(el.getAttribute("data-del"));
+        favs.splice(di, 1);
+        saveFavs();
+        renderFavCount();
+        renderDrawer();
+        updateFavBtn();
+        return;
+      }
+      if (el.className === "d-item") {
+        var fi = Number(el.getAttribute("data-i"));
+        var f = favs[fi];
+        if (f) {
+          closeDrawer();
+          loadCat(f.c, function () {
+            for (var k = 0; k < items.length; k++) {
+              if (items[k] === f.t) { cursor = k; break; }
+            }
+            render();
+            pause(); // 跳回心动题后停在原处，方便细聊
+          });
+        }
+        return;
+      }
+      el = el.parentNode;
+    }
+  };
+
   speedRange.oninput = function () {
     interval = Number(speedRange.value) || 200;
     speedVal.textContent = interval + "ms";
-    try { localStorage.setItem("nighttalk_speed", String(interval)); } catch (e) {}
+    store("nt2_speed", String(interval));
     if (playing) startTimer();
   };
-  // 老内核只有 onchange
   speedRange.onchange = speedRange.oninput;
 }
 
-// ===== 初始化 =====
-// 脚本在 body 末尾，DOM 已就绪，直接同步执行，打开即播放
+// ==================== 初始化 ====================
 function init() {
-  try {
-    var s = Number(localStorage.getItem("nighttalk_speed"));
-    if (s >= 100) {
-      interval = s;
-      speedRange.value = String(s);
-      speedVal.textContent = s + "ms";
-    }
-  } catch (e) {}
+  loadFavs();
+  loadViewed();
+  var s = Number(load("nt2_speed"));
+  if (s >= 100) {
+    interval = s;
+    speedRange.value = String(s);
+    speedVal.textContent = s + "ms";
+  }
+  soundOn = load("nt2_sound") === "1";
+  $("soundBtn").textContent = soundOn ? "♪ 音效: 开" : "♪ 音效: 关";
   buildTabs();
   bindEvents();
+  renderFavCount();
   loadCat(0);
   play();
 }
