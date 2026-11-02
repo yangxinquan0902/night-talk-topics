@@ -308,8 +308,9 @@
     width: 0%;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 0 4px 4px 0;
-    -webkit-transition: width 0.4s ease;
-    transition: width 0.4s ease;
+    /* 不加过渡：轮播 200ms 一刷新，transition 会永远追不上导致视觉卡住；切分类时也要求瞬跳 */
+    -webkit-transition: none;
+    transition: none;
   }
 
   /* 爱心迸发粒子 */
@@ -1206,9 +1207,25 @@ function onTap() {
 }
 
 function bindEvents() {
+  // 卡片整体点按 = 暂停/继续；但事件源是卡片内的按钮时必须放行，
+  // 否则 touchend 的 preventDefault 会吞掉合成 click，导致微信里 ♡/上一题/下一题 全部失效
+  function isCtrlBtn(el) {
+    while (el && el !== card) {
+      if (el.tagName === "BUTTON") return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
   if (card.addEventListener) {
-    card.addEventListener("touchend", function (e) { e.preventDefault(); onTap(); }, false);
-    card.addEventListener("click", onTap, false);
+    card.addEventListener("touchend", function (e) {
+      if (isCtrlBtn(e.target)) return; // 让按钮自己接收 click
+      e.preventDefault();
+      onTap();
+    }, false);
+    card.addEventListener("click", function (e) {
+      if (isCtrlBtn(e.target)) return; // 桌面上点按钮也不要重复触发卡片暂停
+      onTap();
+    }, false);
   } else {
     card.onclick = onTap;
   }
